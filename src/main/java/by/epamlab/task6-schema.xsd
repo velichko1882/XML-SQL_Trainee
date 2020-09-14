@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.epamlab.by/Velichko/Valentine"
+            xmlns="http://www.epamlab.by/Velichko/Valentine"
+            elementFormDefault="qualified">
+
+    <xs:element name="Itinerary" type="ItineraryType"/>
+
+    <xs:complexType name="ItineraryType">
+        <xs:sequence>
+            <xs:element name="Air" type="AirType"/>
+            <xs:element name="PricingInfo" type="PricingInfoType"/>
+            <xs:element name="TicketingInfo" type="TicketingInfoType"/>
+        </xs:sequence>
+        <xs:attribute name="SequenceNumber" type="xs:integer" use="required"/>
+        <xs:attribute name="RPH" type="xs:integer" use="required"/>
+        <xs:attribute name="ItineraryID" type="xs:integer" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="AirType">
+        <xs:sequence>
+            <xs:element name="Options" type="OptionsType"/>
+            <xs:element name="Extension" type="ExtensionType"/>
+        </xs:sequence>
+        <xs:attribute name="Direction" type="xs:string" use="required"/>
+        <xs:attribute name="TotalTravelTime" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="OptionsType">
+        <xs:sequence>
+            <xs:element name="Option" type="OptionType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OptionType">
+        <xs:sequence>
+            <xs:element name="Flight" type="FlightType" maxOccurs="unbounded"/>
+            <xs:element name="Extension" type="ExtensionType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FlightType">
+        <xs:sequence>
+            <xs:element name="Extension" type="ExtensionType"/>
+        </xs:sequence>
+        <xs:attribute name="DepartureDateTime" type="xs:string" use="required"/>
+        <xs:attribute name="ArrivalDateTime" type="xs:string" use="required"/>
+        <xs:attribute name="BookCode" type="xs:string" use="required"/>
+        <xs:attribute name="StopQuantity" type="xs:integer" use="required"/>
+        <xs:attribute name="RPH" type="xs:integer" use="required"/>
+        <xs:attribute name="FlightNumber" type="xs:string" use="required"/>
+        <xs:attribute name="NumberInParty" type="xs:integer" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ExtensionType">
+        <xs:sequence>
+            <xs:element name="FlightSupplementalInfo" type="FlightSupplementalInfoType" minOccurs="0"/>
+            <xs:element name="BookingClassAvailability" type="BookingClassAvailabilityType" minOccurs="0"/>
+            <xs:element name="Eticket" type="xs:string" minOccurs="0"/>
+            <xs:element name="TerminalInformation" type="TerminalInformationType" minOccurs="0"/>
+            <xs:element name="InventorySystem" type="InventorySystemType" minOccurs="0"/>
+            <xs:element name="Source" type="xs:string" minOccurs="0"/>
+            <xs:element name="Attributes" type="AttributesType" minOccurs="0"/>
+            <xs:element name="Base" type="BaseType" minOccurs="0"/>
+            <xs:element name="TaxInfos" type="TaxInfosType" minOccurs="0"/>
+            <xs:element name="FeeInfos" type="FeeInfosType" minOccurs="0"/>
+            <xs:element name="Total" type="TotalType" minOccurs="0"/>
+            <xs:element name="Segment" type="SegmentType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="Passenger" type="PassengerType" minOccurs="0"/>
+            <xs:element name="Carrier" type="xs:string" minOccurs="0"/>
+            <xs:element name="PricingSystem" type="xs:string" minOccurs="0"/>
+            <xs:element name="Provider" type="ProviderType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FlightSupplementalInfoType">
+        <xs:attribute name="FlyingTime" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="BookingClassAvailabilityType">
+        <xs:attribute name="BookCode" type="xs:string" use="required"/>
+        <xs:attribute name="BookDesig" type="xs:integer" use="required"/>
+        <xs:attribute name="Cabin" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="TerminalInformationType">
+        <xs:sequence>
+            <xs:element name="terminal" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InventorySystemType">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="AttributesType">
+        <xs:attribute name="TripType" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="PricingInfoType">
+        <xs:sequence>
+            <xs:element name="Total" type="TotalType"/>
+            <xs:element name="PTCs" type="PTCsType"/>
+            <xs:element name="FareInfos" type="FareInfosType"/>
+            <xs:element name="Extension" type="ExtensionType"/>
+        </xs:sequence>
+        <xs:attribute name="Source" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="TotalType">
+        <xs:sequence>
+            <xs:element name="Base" type="BaseType" minOccurs="0"/>
+            <xs:element name="Taxes" type="TaxesType" minOccurs="0"/>
+            <xs:element name="Fees" type="FeesType" minOccurs="0"/>
+            <xs:element name="Total" type="TotalType" minOccurs="0"/>
+            <xs:element name="Extension" type="ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="Amount" type="xs:double"/>
+        <xs:attribute name="CurrencyCode" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="BaseType">
+        <xs:attribute name="Amount" type="xs:double" use="required"/>
+        <xs:attribute name="CurrencyCode" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="TaxesType">
+        <xs:sequence>
+            <xs:element name="Tax" type="TaxType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TaxType">
+        <xs:attribute name="Amount" type="xs:double" use="required"/>
+        <xs:attribute name="CurrencyCode" type="xs:string" use="required"/>
+        <xs:attribute name="TaxCode" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="FeesType">
+        <xs:sequence>
+            <xs:element name="Fee">
+                <xs:complexType>
+                    <xs:attribute name="TaxCode" type="xs:string" use="required"/>
+                    <xs:attribute name="Amount" type="xs:string" use="required"/>
+                    <xs:attribute name="CurrencyCode" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TaxInfosType">
+        <xs:sequence>
+            <xs:element name="TaxInfo" type="TaxInfoType" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TaxInfoType">
+        <xs:attribute name="TaxCode" type="xs:string"/>
+        <xs:attribute name="BaseCurrency" type="xs:string"/>
+        <xs:attribute name="CurrencyCode" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="FeeInfosType">
+        <xs:sequence>
+            <xs:element name="FeeInfo">
+                <xs:complexType>
+                    <xs:attribute name="TaxCode" type="xs:string" use="required"/>
+                    <xs:attribute name="CurrencyCode" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PTCsType">
+        <xs:sequence>
+            <xs:element name="PTC" type="PTCType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PTCType">
+        <xs:sequence>
+            <xs:element name="PassengerQuantity" type="PassengerQuantityType"/>
+            <xs:element name="BasisCodes" type="BasisCodesType"/>
+            <xs:element name="PassengerFare" type="PassengerFareType"/>
+            <xs:element name="Extension" type="ExtensionType"/>
+        </xs:sequence>
+        <xs:attribute name="Source" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="PassengerQuantityType">
+        <xs:attribute name="Code" type="xs:string" use="required"/>
+        <xs:attribute name="Quantity" type="xs:integer" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="BasisCodesType">
+        <xs:sequence>
+            <xs:element name="BasisCode" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PassengerFareType">
+        <xs:sequence>
+            <xs:element name="Base" type="BaseType"/>
+            <xs:element name="Taxes" type="TaxesType"/>
+            <xs:element name="Fees" type="FeesType"/>
+            <xs:element name="Total" type="TotalType"/>
+            <xs:element name="Extension" type="ExtensionType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="PassengerType">
+        <xs:sequence>
+            <xs:element name="RemoteSystemPTCs">
+                <xs:complexType>
+                    <xs:attribute name="PassengerCode" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="PassengerCode" type="xs:string" use="required"/>
+        <xs:attribute name="PassengerReference" type="xs:integer" use="required"/>
+        <xs:attribute name="PassengerAge" type="xs:integer" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="FareInfosType">
+        <xs:sequence>
+            <xs:element name="FareInfo" type="FareInfoType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FareInfoType">
+        <xs:sequence>
+            <xs:element name="DepartureDate" type="xs:string"/>
+            <xs:element name="FareReference" type="xs:string"/>
+            <xs:element name="Extension" type="ExtensionType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SegmentType">
+        <xs:attribute name="FlightReference" type="xs:integer" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ProviderType">
+        <xs:attribute name="ProviderCode" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="TicketingInfoType">
+        <xs:attribute name="TicketType" type="xs:string" use="required"/>
+    </xs:complexType>
+
+</xs:schema>
